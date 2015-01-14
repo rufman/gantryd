@@ -1,4 +1,5 @@
 import docker
+from docker.utils import kwargs_from_env
 import datetime
 import socket
 
@@ -12,6 +13,9 @@ def enum(*sequential, **named):
 ReportLevels = enum(BACKGROUND=-2, EXTRA=-1, NORMAL=0, IMPORTANT=1)
 
 client = docker.Client()
+
+def setUpMacDockerClient():
+    client = docker.Client(**kwargs_from_env())
 
 def pickUnusedPort():
   s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
