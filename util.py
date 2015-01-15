@@ -2,6 +2,7 @@ import docker
 from docker.utils import kwargs_from_env
 import datetime
 import socket
+import logging
 
 from termcolor import colored, cprint
 
@@ -15,6 +16,7 @@ ReportLevels = enum(BACKGROUND=-2, EXTRA=-1, NORMAL=0, IMPORTANT=1)
 client = docker.Client()
 
 def setUpMacDockerClient():
+    global client
     client = docker.Client(**kwargs_from_env())
 
 def pickUnusedPort():
@@ -52,3 +54,11 @@ def fail(reason, project=None, component=None, exception=None):
 def getDockerClient():
   """ Returns the docker client. """
   return client
+
+def setUpLogging(logger):
+  logger.setLevel(logging.DEBUG)
+  fh = logging.FileHandler('gantryd.log')
+  fh.setLevel(logging.DEBUG)
+  formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+  fh.setFormatter(formatter)
+  logger.addHandler(fh)

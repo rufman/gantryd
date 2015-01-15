@@ -4,7 +4,7 @@ import json
 import logging
 
 from gantryd.componentstate import ComponentState, STOPPED_STATUS, KILLED_STATUS, READY_STATUS
-from util import report, fail, getDockerClient, ReportLevels
+from util import report, fail, getDockerClient, ReportLevels, setUpLogging
 
 CHECK_SLEEP_TIME = 30 # 30 seconds
 CHECK_SHORT_SLEEP_TIME = 10 # 10 seconds
@@ -24,6 +24,7 @@ class ComponentWatcher(object):
 
     # Logging.
     self.logger = logging.getLogger(__name__)
+    setUpLogging(self.logger)
 
     # Setup the state helper for the component.
     self.state = ComponentState(project_name, component, etcd_client)

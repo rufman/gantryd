@@ -1,6 +1,6 @@
 import containerutil
 
-from util import getDockerClient
+from util import getDockerClient, setUpLogging
 
 import logging
 
@@ -9,6 +9,7 @@ class ContainerSignal(object):
   def __init__(self):
     # Logging.
     self.logger = logging.getLogger(__name__)
+    setUpLogging(self.logger)
 
   def getContainerIPAddress(self, container):
     """ Returns the IP address on which the container is running. """

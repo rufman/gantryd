@@ -1,7 +1,7 @@
 from component import Component
 from metadata import getContainerStatus, setContainerStatus, removeContainerMetadata
 from proxy.portproxy import Proxy, Route
-from util import report, fail, getDockerClient, ReportLevels
+from util import report, fail, getDockerClient, ReportLevels, setUpLogging
 from health.checks import buildTerminationSignal, buildHealthCheck
 
 from collections import defaultdict
@@ -57,6 +57,7 @@ class RuntimeManager(object):
   def __init__(self, config):
     # Logging.
     self.logger = logging.getLogger(__name__)
+    setUpLogging(self.logger)
 
     # The overall configuration.
     self.config = config

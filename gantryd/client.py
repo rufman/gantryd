@@ -7,7 +7,7 @@ from gantryd.machinestate import MachineState
 from gantryd.componentstate import ComponentState, STOPPED_STATUS, KILLED_STATUS
 from gantryd.etcdpaths import getProjectConfigPath
 
-from util import report, fail, ReportLevels
+from util import report, fail, ReportLevels, setUpLogging
 
 import etcd
 import uuid
@@ -33,6 +33,7 @@ class GantryDClient(object):
 
     # Logging.
     self.logger = logging.getLogger(__name__)
+    setUpLogging(self.logger)
 
     # Initialize the etcd client that we'll use.
     self.etcd_client = etcd.Client(host=etcdHost)

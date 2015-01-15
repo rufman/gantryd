@@ -1,6 +1,8 @@
 import json
 import logging
 
+from util import setUpLogging
+
 class EtcdState(object):
   """ Base class for all helper classes which get and set state in etcd for objects.
   """
@@ -10,6 +12,7 @@ class EtcdState(object):
 
     # Logging.
     self.logger = logging.getLogger(__name__)
+    setUpLogging(self.logger)
 
   def getState(self, default={}):
     """ Gets the state. """
