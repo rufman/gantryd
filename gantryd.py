@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from gantryd.client import GantryDClient
-from util import setUpMacDockerClient
+from util import setUpDockerClient
 import argparse
 import json
 
@@ -68,15 +68,16 @@ def start():
   parser.add_argument('project', help='The name of the project containing the components')
   parser.add_argument('configfile', help='The name of the config file. Only applies to setconfig.', nargs='?')
   parser.add_argument('-c', help='A component to watch and run', nargs='+', type=str, dest='component')
+  parser.add_argument('-version', help='The docker version to use', nargs='?', type=str, dest='version')
   parser.add_argument('-etcd', help='The etcd endpoint to which the client should connect. Defaults to 127.0.0.1:4001', dest='etcd_host', nargs='?', const=ETCD_HOST)
-  parser.add_argument('--mac', dest='is_mac', action="store_true", help="Use boot2docker hack for docker-py, because we are on Mac OS")
+  parser.add_argument('-mac', dest='is_mac', action="store_true", help="Use boot2docker hack for docker-py, because we are on Mac OS")
 
 
   # Parse the arguments.
   args = parser.parse_args()
 
-  if args.is_mac:
-    setUpMacDockerClient()
+  if args.version:
+    setUpDockerClient(args.version, args.is_mac)
   # Initialize the gantryd client.
   dclient = GantryDClient(args.etcd_host or ETCD_HOST, args.project)
 

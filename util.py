@@ -13,11 +13,14 @@ def enum(*sequential, **named):
 
 ReportLevels = enum(BACKGROUND=-2, EXTRA=-1, NORMAL=0, IMPORTANT=1)
 
-client = docker.Client(base_url='unix://var/run/docker.sock')
+client = docker.Client()
 
-def setUpMacDockerClient():
+def setUpDockerClient(version=None, is_mac=False):
     global client
-    client = docker.Client(**kwargs_from_env())
+    if is_mac:
+      client = docker.Client(**kwargs_from_env())
+    else:
+      client = docker.Client(base_url='unix://var/run/docker.sock', version='1.2.0')
 
 def pickUnusedPort():
   s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
