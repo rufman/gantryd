@@ -13,7 +13,7 @@ def enum(*sequential, **named):
 
 ReportLevels = enum(BACKGROUND=-2, EXTRA=-1, NORMAL=0, IMPORTANT=1)
 
-client = docker.Client()
+client = docker.Client(base_url='unix://var/run/docker.sock')
 
 def setUpMacDockerClient():
     global client
